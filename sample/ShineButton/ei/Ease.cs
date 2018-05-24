@@ -1,0 +1,34 @@
+﻿namespace ShineButton.ei
+{
+    public enum Ease
+    {
+        Linear,
+        QuadIn,
+        QuadOut,
+        QuadInOut,
+        CubicIn,
+        CubicOut,
+        CubicInOut,
+        QuartIn,
+        QuartOut,
+        QuartInOut,
+        QuintIn,
+        QuintOut,
+        QuintInOut,
+        SineIn,
+        SineOut,
+        SineInOut,
+        BackIn,
+        BackOut,
+        BackInOut,
+        CircIn,
+        CircOut,
+        CircInOut,
+        BounceIn,
+        BounceOut,
+        BounceInOut,
+        ElasticIn,
+        ElasticOut,
+        ElasticInOut
+    }
+}
