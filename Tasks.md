@@ -2,10 +2,10 @@
 
 - [ ] Fill out readme.md a bit better.
 
-- [ ] Finish ability to turn off colour masks leaving original image untouched.
-
 - [ ] Rework the sample removing the physical classes, replacing them with nuget references.
 
-- [ ] Convert to Camel case where appropriate.
+- [x] Convert to Camel case where appropriate.
 
-- [ ] Create v1 nuget package.
+- [x] Create v1 nuget package.
+
+- [ ] There's quite a few issues I've noticed from the original port library, so need to work through these. Rasing them as issues.
