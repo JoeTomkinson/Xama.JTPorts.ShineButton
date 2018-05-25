@@ -7,6 +7,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using ShineButton.Classes;
 using Android.Graphics;
+using Xama.JTPorts.ShineButton.Models;
 
 namespace ShineButton
 {
@@ -26,10 +27,24 @@ namespace ShineButton
 			FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
 
-            // top shine button in view.
-            var button = FindViewById<ShineButtonControl>(Resource.Id.po_image1);
-            button.AllowRandomColour = true;
-            button.RandomColours = new Color[] { Color.LightBlue, Color.DarkBlue, Color.Blue };
+            // grab our buttons
+            var buttonLike = FindViewById<ShineButtonControl>(Resource.Id.po_like);
+            var buttonGhandi = FindViewById<ShineButtonControl>(Resource.Id.po_ghandi);
+            var buttonHeart = FindViewById<ShineButtonControl>(Resource.Id.po_heart);
+            var buttonIronman = FindViewById<ShineButtonControl>(Resource.Id.po_ironman);
+            var buttonSave = FindViewById<ShineButtonControl>(Resource.Id.po_save);
+            var buttonSmile = FindViewById<ShineButtonControl>(Resource.Id.po_smile);
+            var buttonStar = FindViewById<ShineButtonControl>(Resource.Id.po_star);
+
+            // sets the shine animation to flash.
+            buttonLike.EnableFlashing = true;
+
+            // Supplies custom set of random animations
+            buttonIronman.RandomColourSelection = new ColourSet(Color.Red, Color.DarkRed, Color.IndianRed, Color.PaleVioletRed, Color.MediumVioletRed, Color.OrangeRed);
+            buttonIronman.ShineCount = 20;
+
+            // this will force the shine animations to pick from a base set of 10 colours.
+            buttonStar.AllowRandomColour = true;
         }
 
 		public override bool OnCreateOptionsMenu(IMenu menu)

@@ -9,6 +9,7 @@ using Android.Views;
 using Android.Views.Animations;
 using System;
 using Xama.JTPorts.ShineButton;
+using Xama.JTPorts.ShineButton.Models;
 
 namespace ShineButton.Classes
 {
@@ -69,8 +70,8 @@ namespace ShineButton.Classes
         /// </summary>
         public bool AllowRandomColour
         {
-            get { return shineParams.AllowRandomColor; }
-            set { shineParams.AllowRandomColor = value; }
+            get { return shineParams.UseRandomColor; }
+            set { shineParams.UseRandomColor = value; }
         }
 
         /// <summary>
@@ -190,11 +191,7 @@ namespace ShineButton.Classes
         /// <summary>
         /// Supply random colour selection for the random shine animation.
         /// </summary>
-        public Color[] RandomColours
-        {
-            get { return shineParams.RandomColourSelection; }
-            set { shineParams.RandomColourSelection = value; }
-        }
+        public ColourSet RandomColourSelection { get; set; } = null;
 
         #endregion
 
@@ -234,7 +231,7 @@ namespace ShineButton.Classes
             btnColor = a.GetColor(Resource.Styleable.ShineButton_btn_color, Color.Gray);
             ButtonFillColour = a.GetColor(Resource.Styleable.ShineButton_btn_fill_color, Color.Black);
 
-            shineParams.AllowRandomColor = a.GetBoolean(Resource.Styleable.ShineButton_allow_random_color, false);
+            shineParams.UseRandomColor = a.GetBoolean(Resource.Styleable.ShineButton_allow_random_color, false);
             shineParams.AnimDuration = a.GetInteger(Resource.Styleable.ShineButton_shine_animation_duration, (int)shineParams.AnimDuration);
             shineParams.BigShineColor = a.GetColor(Resource.Styleable.ShineButton_big_shine_color, shineParams.BigShineColor);
             shineParams.ClickAnimDuration = a.GetInteger(Resource.Styleable.ShineButton_click_animation_duration, (int)shineParams.ClickAnimDuration);
@@ -381,7 +378,7 @@ namespace ShineButton.Classes
             if (activity != null)
             {
                 ViewGroup rootView = (ViewGroup)activity.FindViewById(Window.IdAndroidContent);
-                shineView = new ShineView(activity, this, shineParams);
+                shineView = new ShineView(activity, this, shineParams, RandomColourSelection);
                 rootView.AddView(shineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent));
                 DoShareAnim();
             }
