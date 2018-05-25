@@ -17,6 +17,17 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <PackageId>Xama.JTPorts.ShineButton</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Description>Xamarin.Android Native "Shine Button" control. This is a UI lib for Xamarin Android. Creates %27shining%27 effects.</Description>
+    <Authors>Joe Tomkinson</Authors>
+    <Title>Xama.JTPorts.ShineButton</Title>
+    <Owners>Joe Tomkinson</Owners>
+    <Copyright>Joe Tomkinson</Copyright>
+    <PackageProjectUrl>https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/images/shinebuttonicon.png%3fraw=true</PackageIconUrl>
+    <IsDevelopmentDependency>False</IsDevelopmentDependency>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +67,9 @@
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging">
+      <Version>0.2.2</Version>
+    </PackageReference>
     <PackageReference Include="Xama.JTPorts.EasingInterpolator">
       <Version>1.0.1</Version>
     </PackageReference>
