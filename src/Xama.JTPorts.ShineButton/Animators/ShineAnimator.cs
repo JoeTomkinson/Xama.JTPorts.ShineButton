@@ -1,15 +1,22 @@
 ﻿using Android.Animation;
 using Android.Graphics;
-using ShineButton.ei;
+using Xama.JTPorts.EasingInterpolator;
 
 namespace ShineButton.Classes
 {
     public class ShineAnimator : ValueAnimator
     {
-
         private float MAX_VALUE = 1.5f;
         private long ANIM_DURATION = 1500;
         private Canvas canvas;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Canvas Canvas
+        {
+            set { canvas = value; }
+        }
 
         public ShineAnimator()
         {
@@ -27,14 +34,9 @@ namespace ShineButton.Classes
             SetInterpolator(new EasingInterpolator(Ease.QuartOut));
         }
 
-        public void startAnim(ShineView shineView, int centerAnimX, int centerAnimY)
+        public void StartAnim(ShineView shineView, int centerAnimX, int centerAnimY)
         {
             Start();
-        }
-
-        public void setCanvas(Canvas canvas)
-        {
-            this.canvas = canvas;
         }
     }
 }

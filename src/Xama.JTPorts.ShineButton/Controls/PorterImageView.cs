@@ -1,7 +1,6 @@
 ﻿using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Runtime;
 using Android.Util;
 using System;
 
@@ -18,31 +17,52 @@ namespace ShineButton.Classes
         private Canvas drawableCanvas;
         private Bitmap drawableBitmap;
         private Paint drawablePaint;
-
-        Color paintColor = Color.Gray;
-
+        private Color paintColor = Color.Gray;
         private bool invalidated = true;
 
-        #region CONSTRUCTORS
+        #region PUBLIC PROPERTIES
 
-        public PorterImageView(Context context) : base(context)
+        /// <summary>
+        /// 
+        /// </summary>
+        public Color SourceColour
         {
-            setup(context, null, 0);
-        }
+            get { return paintColor; }
+            set
+            {
+                paintColor = value;
+                SetImageDrawable(new ColorDrawable(value));
 
-        public PorterImageView(Context context, IAttributeSet attrs) : base(context, attrs)
-        {
-            setup(context, attrs, 0);
-        }
-
-        public PorterImageView(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
-        {
-            setup(context, attrs, 0);
+                if (drawablePaint != null)
+                {
+                    drawablePaint.Color = value;
+                    Invalidate();
+                }
+            }
         }
 
         #endregion
 
-        public void setup(Context context, IAttributeSet attrs, int defStyle)
+        #region PUBLIC CONSTRUCTORS
+
+        public PorterImageView(Context context) : base(context)
+        {
+            Setup(context, null, 0);
+        }
+
+        public PorterImageView(Context context, IAttributeSet attrs) : base(context, attrs)
+        {
+            Setup(context, attrs, 0);
+        }
+
+        public PorterImageView(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
+        {
+            Setup(context, attrs, 0);
+        }
+
+        #endregion
+
+        internal void Setup(Context context, IAttributeSet attrs, int defStyle)
         {
             if (GetScaleType() == ScaleType.FitCenter)
             {
@@ -53,17 +73,7 @@ namespace ShineButton.Classes
             maskPaint.Color = Color.Black;
         }
 
-        public void setSrcColor(Color color)
-        {
-            paintColor = color;
-            SetImageDrawable(new ColorDrawable(color));
-
-            if (drawablePaint != null)
-            {
-                drawablePaint.Color = color;
-                Invalidate();
-            }
-        }
+        #region CLASS OVERRIDES
 
         public override void Invalidate()
         {
@@ -74,39 +84,15 @@ namespace ShineButton.Classes
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
         {
             base.OnSizeChanged(w, h, oldw, oldh);
-            createMaskCanvas(w, h, oldw, oldh);
+            CreateMaskCanvas(w, h, oldw, oldh);
         }
-
-        private void createMaskCanvas(int width, int height, int oldw, int oldh)
-        {
-            bool sizeChanged = width != oldw || height != oldh;
-            bool isValid = width > 0 && height > 0;
-            if (isValid && (maskCanvas == null || sizeChanged))
-            {
-                maskCanvas = new Canvas();
-                maskBitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
-                maskCanvas.SetBitmap(maskBitmap);
-
-                maskPaint.Reset();
-                paintMaskCanvas(maskCanvas, maskPaint, width, height);
-
-                drawableCanvas = new Canvas();
-                drawableBitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
-                drawableCanvas.SetBitmap(drawableBitmap);
-                drawablePaint = new Paint(PaintFlags.AntiAlias);
-                drawablePaint.Color = paintColor;
-                invalidated = true;
-            }
-        }
-
-        protected abstract void paintMaskCanvas(Canvas maskCanvas, Paint maskPaint, int width, int height);
 
         protected override void OnDraw(Canvas canvas)
         {
             if (!IsInEditMode)
             {
-                //TODO: Save Layer is depreciated, convert to alternative.
-                int saveCount = canvas.SaveLayer(0.0f, 0.0f, Width, Height, null, SaveFlags.All);
+                int saveCount = canvas.SaveLayer(new RectF(0.0f, 0.0f, Width, Height), null);
+
                 try
                 {
                     if (invalidated)
@@ -171,5 +157,32 @@ namespace ShineButton.Classes
 
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+
+        #endregion
+
+        private void CreateMaskCanvas(int width, int height, int oldw, int oldh)
+        {
+            bool sizeChanged = width != oldw || height != oldh;
+            bool isValid = width > 0 && height > 0;
+
+            if (isValid && (maskCanvas == null || sizeChanged))
+            {
+                maskCanvas = new Canvas();
+                maskBitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+                maskCanvas.SetBitmap(maskBitmap);
+
+                maskPaint.Reset();
+                PaintMaskCanvas(maskCanvas, maskPaint, width, height);
+
+                drawableCanvas = new Canvas();
+                drawableBitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+                drawableCanvas.SetBitmap(drawableBitmap);
+                drawablePaint = new Paint(PaintFlags.AntiAlias);
+                drawablePaint.Color = paintColor;
+                invalidated = true;
+            }
+        }
+
+        protected abstract void PaintMaskCanvas(Canvas maskCanvas, Paint maskPaint, int width, int height);
     }
 }

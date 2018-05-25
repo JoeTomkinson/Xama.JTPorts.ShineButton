@@ -1,12 +1,9 @@
 ﻿using Android.Animation;
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
-using ShineButton.ei;
 using System;
+using Xama.JTPorts.EasingInterpolator;
 
 namespace ShineButton.Classes
 {
@@ -14,79 +11,66 @@ namespace ShineButton.Classes
     {
         #region CLASS LEVEL VARIABLES
 
-        private static String TAG = nameof(ShineView);
+        private static readonly String TAG = nameof(ShineView);
 
         private static long FRAME_REFRESH_DELAY = 25; //default 10ms ,change to 25ms for saving cpu.
 
-        ShineAnimator shineAnimator;
-        ValueAnimator clickAnimator;
+        private ShineAnimator shineAnimator;
+        private ValueAnimator clickAnimator;
 
-        ShineButtonControl shineButton;
+        private ShineButtonControl shineButton;
         private Paint paint;
         private Paint paint2;
         private Paint paintSmall;
 
-        int colorCount = 10;
-        static Color[] colorRandom = new Color[10];
+        private int colorCount
+        {
+            get { return colorRandom.Length; }
+        }
 
-        // Customer property
-        int shineCount;
-        float smallOffsetAngle;
-        float turnAngle;
-        long animDuration;
-        long clickAnimDuration;
-        float shineDistanceMultiple;
-        Color smallShineColor = colorRandom[0];
-        Color bigShineColor = colorRandom[1];
+        private static Color[] colorRandom = new Color[10];
 
-        int shineSize = 0;
+        private int shineCount;
+        private float smallOffsetAngle;
+        private float turnAngle;
+        private long animDuration;
+        private long clickAnimDuration;
+        private float shineDistanceMultiple;
+        private Color smallShineColor = colorRandom[0];
+        private Color bigShineColor = colorRandom[1];
 
-        bool allowRandomColor = false;
-        bool enableFlashing = false;
+        private int shineSize = 0;
 
-        RectF rectF = new RectF();
-        RectF rectFSmall = new RectF();
+        private bool allowRandomColor = false;
+        private bool enableFlashing = false;
 
-        Random random = new Random();
-        int centerAnimX;
-        int centerAnimY;
-        int btnWidth;
-        int btnHeight;
+        private RectF rectF = new RectF();
+        private RectF rectFSmall = new RectF();
 
-        double thirdLength;
-        float value;
-        float clickValue = 0;
-        bool isRun = false;
+        private Random random = new Random();
+        private int centerAnimX;
+        private int centerAnimY;
+        private int btnWidth;
+        private int btnHeight;
+
+        private double thirdLength;
+        private float value;
+        private float clickValue = 0;
+        private bool isRun = false;
         private float distanceOffset = 0.2f;
 
         #endregion
 
-        #region PUBLIC CONSTRUCTORS
-
-        public ShineView(Context context) : base(context)
-        {
-        }
-
-        public ShineView(Context context, IAttributeSet attrs) : base(context, attrs)
-        {
-        }
-
-        public ShineView(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
-        {
-        }
-
-        public ShineView(Context context, IAttributeSet attrs, int defStyleAttr, int defStyleRes) : base(context, attrs, defStyleAttr, defStyleRes)
-        {
-        }
+        #region PUBLIC CONSTRUCTOR
 
         public ShineView(Context context, ShineButtonControl shineButton, ShineParams shineParams) : base(context)
         {
-            initShineParams(shineParams, shineButton);
-            
+            InitShineParams(shineParams, shineButton);
+
             this.shineAnimator = new ShineAnimator(animDuration, shineDistanceMultiple, clickAnimDuration);
             ValueAnimator.FrameDelay = FRAME_REFRESH_DELAY;
             this.shineButton = shineButton;
-            
+
             paint = new Paint();
             paint.Color = bigShineColor;
             paint.StrokeWidth = 20;
@@ -123,23 +107,100 @@ namespace ShineButton.Classes
 
             shineAnimator.AnimationEnd += (s, e) =>
             {
-                shineButton.removeView(this);
+                shineButton.RemoveView(this);
             };
         }
 
         #endregion
 
-        public void showAnimation(ShineButtonControl shineButton)
+        #region INITIALISATION LOGIC
+
+        private void InitShineParams(ShineParams shineParams, ShineButtonControl shineButton)
+        {
+            shineCount = shineParams.ShineCount;
+            turnAngle = shineParams.ShineTurnAngle;
+            smallOffsetAngle = shineParams.SmallShineOffsetAngle;
+            enableFlashing = shineParams.EnableFlashing;
+            allowRandomColor = shineParams.AllowRandomColor;
+            shineDistanceMultiple = shineParams.ShineDistanceMultiple;
+            animDuration = shineParams.AnimDuration;
+            clickAnimDuration = shineParams.ClickAnimDuration;
+            smallShineColor = shineParams.SmallShineColor;
+            bigShineColor = shineParams.BigShineColor;
+            shineSize = shineParams.ShineSize;
+
+            if (smallShineColor == 0)
+            {
+                smallShineColor = colorRandom[6];
+            }
+
+            if (bigShineColor == 0)
+            {
+                bigShineColor = shineButton.BigShineColour;
+            }
+        }
+
+        #endregion
+
+        #region METHOD OVERRIDES
+
+        protected override void OnDraw(Canvas canvas)
+        {
+            base.OnDraw(canvas);
+
+            for (int i = 0; i < shineCount; i++)
+            {
+                if (allowRandomColor)
+                {
+                    paint.Color = colorRandom[Math.Abs(colorCount / 2 - i) >= colorCount ? colorCount - 1 : Math.Abs(colorCount / 2 - i)];
+                }
+                canvas.DrawArc(rectF, 360f / shineCount * i + 1 + ((value - 1) * turnAngle), 0.1f, false, GetConfigPaint(paint));
+            }
+
+            for (int i = 0; i < shineCount; i++)
+            {
+                if (allowRandomColor)
+                {
+                    paint.Color = colorRandom[Math.Abs(colorCount / 2 - i) >= colorCount ? colorCount - 1 : Math.Abs(colorCount / 2 - i)];
+                }
+                canvas.DrawArc(rectFSmall, 360f / shineCount * i + 1 - smallOffsetAngle + ((value - 1) * turnAngle), 0.1f, false, GetConfigPaint(paintSmall));
+
+            }
+            paint.StrokeWidth = btnWidth * (clickValue) * (shineDistanceMultiple - distanceOffset);
+            if (clickValue != 0)
+            {
+                paint2.StrokeWidth = btnWidth * (clickValue) * (shineDistanceMultiple - distanceOffset) - 8;
+            }
+            else
+            {
+                paint2.StrokeWidth = 0;
+            }
+
+            canvas.DrawPoint(centerAnimX, centerAnimY, paint);
+            canvas.DrawPoint(centerAnimX, centerAnimY, paint2);
+
+            if (shineAnimator != null && !isRun)
+            {
+                isRun = true;
+                ShowAnimation(shineButton);
+            }
+        }
+
+        #endregion
+
+        #region PRIVATE METHODS
+
+        private void ShowAnimation(ShineButtonControl shineButton)
         {
             btnWidth = shineButton.Width;
             btnHeight = shineButton.Height;
-            thirdLength = getThirdLength(btnHeight, btnWidth);
+            thirdLength = GetThirdLength(btnHeight, btnWidth);
             int[] location = new int[2];
             shineButton.GetLocationInWindow(location);
 
             Rect visibleFrame = new Rect();
 
-            if (isWindowsNotLimit(shineButton.activity))
+            if (Utils.IsWindowsNotLimit(shineButton.activity))
             {
                 shineButton.activity.Window.DecorView.GetLocalVisibleRect(visibleFrame);
             }
@@ -150,20 +211,20 @@ namespace ShineButton.Classes
 
             centerAnimX = location[0] + btnWidth / 2 - visibleFrame.Left; // If navigation bar is not displayed on left, visibleFrame.left is 0.
 
-            if (isTranslucentNavigation(shineButton.activity))
+            if (Utils.IsTranslucentNavigation(shineButton.activity))
             {
-                if (isFullScreen(shineButton.activity))
+                if (Utils.IsFullScreen(shineButton.activity))
                 {
-                    centerAnimY = visibleFrame.Height() - shineButton.getBottomHeight(false) + btnHeight / 2;
+                    centerAnimY = visibleFrame.Height() - shineButton.GetBottomHeight(false) + btnHeight / 2;
                 }
                 else
                 {
-                    centerAnimY = visibleFrame.Height() - shineButton.getBottomHeight(true) + btnHeight / 2;
+                    centerAnimY = visibleFrame.Height() - shineButton.GetBottomHeight(true) + btnHeight / 2;
                 }
             }
             else
             {
-                centerAnimY = MeasuredHeight - shineButton.getBottomHeight(false) + btnHeight / 2;
+                centerAnimY = MeasuredHeight - shineButton.GetBottomHeight(false) + btnHeight / 2;
             }
 
             shineAnimator.Update += (s, e) =>
@@ -187,176 +248,71 @@ namespace ShineButton.Classes
                 Invalidate();
             };
 
-            shineAnimator.startAnim(this, centerAnimX, centerAnimY);
+            shineAnimator.StartAnim(this, centerAnimX, centerAnimY);
             clickAnimator.Start();
         }
 
-        protected override void OnDraw(Canvas canvas)
-        {
-            base.OnDraw(canvas);
-
-            for (int i = 0; i < shineCount; i++)
-            {
-                if (allowRandomColor)
-                {
-                    paint.Color = colorRandom[Math.Abs(colorCount / 2 - i) >= colorCount ? colorCount - 1 : Math.Abs(colorCount / 2 - i)];
-                }
-                canvas.DrawArc(rectF, 360f / shineCount * i + 1 + ((value - 1) * turnAngle), 0.1f, false, getConfigPaint(paint));
-            }
-
-            for (int i = 0; i < shineCount; i++)
-            {
-                if (allowRandomColor)
-                {
-                    paint.Color = colorRandom[Math.Abs(colorCount / 2 - i) >= colorCount ? colorCount - 1 : Math.Abs(colorCount / 2 - i)];
-                }
-                canvas.DrawArc(rectFSmall, 360f / shineCount * i + 1 - smallOffsetAngle + ((value - 1) * turnAngle), 0.1f, false, getConfigPaint(paintSmall));
-
-            }
-            paint.StrokeWidth = btnWidth * (clickValue) * (shineDistanceMultiple - distanceOffset);
-            if (clickValue != 0)
-            {
-                paint2.StrokeWidth = btnWidth * (clickValue) * (shineDistanceMultiple - distanceOffset) - 8;
-            }
-            else
-            {
-                paint2.StrokeWidth = 0;
-            }
-
-            canvas.DrawPoint(centerAnimX, centerAnimY, paint);
-            canvas.DrawPoint(centerAnimX, centerAnimY, paint2);
-
-            if (shineAnimator != null && !isRun)
-            {
-                isRun = true;
-                showAnimation(shineButton);
-            }
-        }
-
-        private Paint getConfigPaint(Paint paint)
+        private Paint GetConfigPaint(Paint paint)
         {
             if (enableFlashing)
             {
                 paint.Color = colorRandom[random.Next(colorCount - 1)];
             }
+
             return paint;
         }
 
-        private double getThirdLength(int btnHeight, int btnWidth)
+        private double GetThirdLength(int btnHeight, int btnWidth)
         {
             int all = btnHeight * btnHeight + btnWidth * btnWidth;
             return Math.Sqrt(all);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="activity"></param>
-        /// <returns></returns>
-        public static bool isFullScreen(Activity activity)
-        {
-            var flag = activity.Window.Attributes.Flags;
-
-            if (flag == WindowManagerFlags.Fullscreen && (Application.Context as Activity).Window.Attributes.Flags == WindowManagerFlags.Fullscreen)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="activity"></param>
-        /// <returns></returns>
-        public static bool isTranslucentNavigation(Activity activity)
-        {
-            var flag = activity.Window.Attributes.Flags;
-
-            if (flag == WindowManagerFlags.TranslucentNavigation && (Application.Context as Activity).Window.Attributes.Flags == WindowManagerFlags.TranslucentNavigation)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="activity"></param>
-        /// <returns></returns>
-        private bool isWindowsNotLimit(Activity activity)
-        {
-            var flag = activity.Window.Attributes.Flags;
-
-            if (flag == WindowManagerFlags.LayoutNoLimits && (Application.Context as Activity).Window.Attributes.Flags == WindowManagerFlags.LayoutNoLimits)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
-        private void initShineParams(ShineParams shineParams, ShineButtonControl shineButton)
-        {
-            shineCount = shineParams.shineCount;
-            turnAngle = shineParams.shineTurnAngle;
-            smallOffsetAngle = shineParams.smallShineOffsetAngle;
-            enableFlashing = shineParams.enableFlashing;
-            allowRandomColor = shineParams.allowRandomColor;
-            shineDistanceMultiple = shineParams.shineDistanceMultiple;
-            animDuration = shineParams.animDuration;
-            clickAnimDuration = shineParams.clickAnimDuration;
-            smallShineColor = shineParams.smallShineColor;
-            bigShineColor = shineParams.bigShineColor;
-            shineSize = shineParams.shineSize;
-            if (smallShineColor == 0)
-            {
-                smallShineColor = colorRandom[6];
-            }
-
-            if (bigShineColor == 0)
-            {
-                bigShineColor = shineButton.getColor();
-            }
-        }
-
+        #endregion
 
         public class ShineParams
         {
-            public ShineParams()
+            public ShineParams(Color[] randomColors = null)
             {
-                colorRandom[0] = Color.ParseColor("#FFFF99");
-                colorRandom[1] = Color.ParseColor("#FFCCCC");
-                colorRandom[2] = Color.ParseColor("#996699");
-                colorRandom[3] = Color.ParseColor("#FF6666");
-                colorRandom[4] = Color.ParseColor("#FFFF66");
-                colorRandom[5] = Color.ParseColor("#F44336");
-                colorRandom[6] = Color.ParseColor("#666666");
-                colorRandom[7] = Color.ParseColor("#CCCC00");
-                colorRandom[8] = Color.ParseColor("#666666");
-                colorRandom[9] = Color.ParseColor("#999933");
+                if (randomColors == null)
+                {
+                    colorRandom[0] = Color.ParseColor("#FFFF99");
+                    colorRandom[1] = Color.ParseColor("#FFCCCC");
+                    colorRandom[2] = Color.ParseColor("#996699");
+                    colorRandom[3] = Color.ParseColor("#FF6666");
+                    colorRandom[4] = Color.ParseColor("#FFFF66");
+                    colorRandom[5] = Color.ParseColor("#F44336");
+                    colorRandom[6] = Color.ParseColor("#666666");
+                    colorRandom[7] = Color.ParseColor("#CCCC00");
+                    colorRandom[8] = Color.ParseColor("#666666");
+                    colorRandom[9] = Color.ParseColor("#999933");
+                }
+                else
+                {
+                    colorRandom = randomColors;
+                }
             }
 
-            public bool allowRandomColor = false;
-            public long animDuration = 1500;
-            public Color bigShineColor = Color.White;
-            public long clickAnimDuration = 200;
-            public bool enableFlashing = false;
-            public int shineCount = 7;
-            public float shineTurnAngle = 20;
-            public float shineDistanceMultiple = 1.5f;
-            public float smallShineOffsetAngle = 20;
-            public Color smallShineColor = Color.White;
-            public int shineSize = 0;
+            public bool AllowRandomColor = false;
+            public long AnimDuration = 1500;
+            public Color BigShineColor = Color.White;
+            public long ClickAnimDuration = 200;
+            public bool EnableFlashing = false;
+            public int ShineCount = 7;
+            public float ShineTurnAngle = 20;
+            public float ShineDistanceMultiple = 1.5f;
+            public float SmallShineOffsetAngle = 20;
+            public Color SmallShineColor = Color.White;
+            public int ShineSize = 0;
+
+            /// <summary>
+            /// Exposed random colour array to allow selection of own random colours.
+            /// </summary>
+            public Color[] RandomColourSelection
+            {
+                get { return colorRandom; }
+                set { colorRandom = value; }
+            }
         }
     }
 }

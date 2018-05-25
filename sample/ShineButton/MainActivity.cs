@@ -6,6 +6,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using ShineButton.Classes;
+using Android.Graphics;
 
 namespace ShineButton
 {
@@ -25,13 +26,10 @@ namespace ShineButton
 			FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
 
-
+            // top shine button in view.
             var button = FindViewById<ShineButtonControl>(Resource.Id.po_image1);
-
-            button.setAllowRandomColor(true);
-
-
-
+            button.AllowRandomColour = true;
+            button.RandomColours = new Color[] { Color.LightBlue, Color.DarkBlue, Color.Blue };
         }
 
 		public override bool OnCreateOptionsMenu(IMenu menu)

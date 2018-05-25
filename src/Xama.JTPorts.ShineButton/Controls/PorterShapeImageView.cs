@@ -5,35 +5,56 @@ using Android.Graphics.Drawables;
 using Android.Runtime;
 using Android.Util;
 using System;
+using Xama.JTPorts.ShineButton;
 
 namespace ShineButton.Classes
 {
     public class PorterShapeImageView : PorterImageView
     {
+        #region CLASS LEVEL VARIABLES
+
         private Drawable shape;
         private Matrix matrix;
         private Matrix drawMatrix;
-        
+
+        #endregion
+
+        #region PUBLIC PROPERTIES
+
+        public Drawable Shape
+        {
+            get { return shape; }
+            set
+            {
+                shape = value;
+                Invalidate();
+            }
+        }
+
+        #endregion
+
         #region CONSTRUCTORS
 
         public PorterShapeImageView(Context context) : base(context)
         {
-            setup(context, null, 0);
+            Setup(context, null, 0);
         }
 
         public PorterShapeImageView(Context context, IAttributeSet attrs) : base(context, attrs)
         {
-            setup(context, attrs, 0);
+            Setup(context, attrs, 0);
         }
 
         public PorterShapeImageView(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
         {
-            setup(context, attrs, 0);
+            Setup(context, attrs, 0);
         }
-        
+
         #endregion
 
-        public void setup(Context context, IAttributeSet attrs, int defStyle)
+        #region INITIALISER
+
+        internal new void Setup(Context context, IAttributeSet attrs, int defStyle)
         {
             if (attrs != null)
             {
@@ -41,22 +62,19 @@ namespace ShineButton.Classes
                 shape = typedArray.GetDrawable(Resource.Styleable.PorterImageView_siShape);
                 typedArray.Recycle();
             }
+
             matrix = new Matrix();
         }
 
-        public void setShape(Drawable drawable)
-        {
-            shape = drawable;
-            Invalidate();
-        }
+        #endregion
 
-        protected override void paintMaskCanvas(Canvas maskCanvas, Paint maskPaint, int width, int height)
+        protected override void PaintMaskCanvas(Canvas maskCanvas, Paint maskPaint, int width, int height)
         {
             if (shape != null)
             {
                 if (shape.GetType() == typeof(BitmapDrawable))
                 {
-                    configureBitmapBounds(Width, Height);
+                    ConfigureBitmapBounds(Width, Height);
                     if (drawMatrix != null)
                     {
                         int drawableSaveCount = maskCanvas.SaveCount;
@@ -73,7 +91,7 @@ namespace ShineButton.Classes
             }
         }
 
-        private void configureBitmapBounds(int viewWidth, int viewHeight)
+        private void ConfigureBitmapBounds(int viewWidth, int viewHeight)
         {
             drawMatrix = null;
             int drawableWidth = shape.IntrinsicWidth;

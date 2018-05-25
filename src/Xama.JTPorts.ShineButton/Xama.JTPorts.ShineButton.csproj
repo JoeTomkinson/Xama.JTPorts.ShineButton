@@ -47,13 +47,18 @@
   <ItemGroup>
     <Compile Include="Controls\PorterImageView.cs" />
     <Compile Include="Controls\PorterShapeImageView.cs" />
+    <Compile Include="Interfaces\ICheckedListener.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Animators\ShineAnimator.cs" />
     <Compile Include="Controls\ShineButtonControl.cs" />
     <Compile Include="Controls\ShineView.cs" />
+    <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xama.JTPorts.EasingInterpolator">
+      <Version>1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
   </ItemGroup>
   <ItemGroup>
