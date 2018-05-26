@@ -3,6 +3,7 @@
 [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14s)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![Build: Passing](https://img.shields.io/badge/Build-Passing-green.svg)
+[![NuGet](https://img.shields.io/nuget/v/Xama.JTPorts.ShineButton.svg?label=NuGet)](https://www.nuget.org/packages/Xama.JTPorts.ShineButton/)
 
 >Xamarin.Android Native UI lib button effects like "shining".
 
