@@ -17,28 +17,21 @@ This is a ported build, converted from Java to C# for use with the Xamarin MonoF
 
 # Outstanding Tasks
 
-- [ ] Fill out readme.md a bit better.
+- [x] Fill out readme.md a bit better.
 
 - [ ] Rework the sample removing the physical classes, replacing them with nuget references.
+
+- [x] Convert setters to properties instead as per c# standards.
 
 - [x] Convert to Camel case where appropriate.
 
 - [x] Create v1 nuget package.
 
-- [ ] There's quite a few issues I've noticed from the original port library, so need to work through these.
+- [x] There's quite a few issues I've noticed from the original port library, so need to work through these.
 
 - [ ] Create animated gifs showcasing different settings
 
 - [ ] Decide if I want to fix the 'sighing' effect that can happen with certain settings. 
-
-# Features
-
-## Ported Functionality
-- [TO BE ADDED]
-
-## Additional Functionality
-- [TO BE ADDED]
-
 
 <br>
 
@@ -99,3 +92,10 @@ Or simply define in AXML as such:
 <attr name="shine_distance_multiple" format="float" />
 <attr name="shine_size" format="dimension" />
 ```
+
+# Dependencies
+
+![img](https://github.com/DigitalSa1nt/Xama.JTPorts.EasingInterpolator/blob/master/images/easinginterpolatoricon.png?raw=true)    [Xama.JTPorts.EasingInterpolator](https://github.com/DigitalSa1nt/Xama.JTPorts.EasingInterpolator)
+
+
+
