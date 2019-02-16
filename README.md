@@ -95,7 +95,10 @@ Or simply define in AXML as such:
 
 # Dependencies
 
-![img](https://github.com/DigitalSa1nt/Xama.JTPorts.EasingInterpolator/blob/master/images/easinginterpolatoricon.png?raw=true)    [Xama.JTPorts.EasingInterpolator](https://github.com/DigitalSa1nt/Xama.JTPorts.EasingInterpolator)
+[Xama.JTPorts.EasingInterpolator](https://github.com/DigitalSa1nt/Xama.JTPorts.EasingInterpolator)
 
+# Useful?
+<a href="https://www.buymeacoffee.com/digitalsa1nt" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
+ _You know, only if you want to_
 
