@@ -43,6 +43,59 @@ This is a ported build, converted from Java to C# for use with the Xamarin MonoF
 <br>
 
 # Basic usage
+
+The Icon shape is made from png mask and the ported library preferred RAW formats, however you can use normal images, just bear in mind that as it masks an image you'll lose details, so use cut-out images instead, similar to the animated gif above.
+
+Create programatically and then simply add to your view:
+
+```cs
+         ShineButtonControl shineButtonControl = new ShineButtonControl(this);
+         shineButtonControl.ButtonColour = Color.Gray;
+         shineButtonControl.ButtonFillColour = Color.Red;
+         shineButtonControl.ShapeResource = Resource.Raw.heart;
+         shineButtonControl.AllowRandomColour = true;
+
+         var layoutParams = new LinearLayout.LayoutParams(100, 100);
+         shineButtonControl.LayoutParameters = layoutParams;
 ```
-         [TO BE ADDED]
+
+Or simply define in AXML as such:
+
+```cs
+<ShineButton.Classes.ShineButtonControl
+         android:layout_width="50dp"
+         android:layout_height="50dp"
+         android:layout_marginBottom="50dp"
+         android:layout_centerInParent="true"
+         android:id="@+id/po_like"
+         app:btn_color="@android:color/darker_gray"
+         app:btn_fill_color="#0f4cad"
+         app:big_shine_color="#8094e5"
+         app:click_animation_duration="200"
+         app:shine_animation_duration="1500"
+         app:shine_turn_angle="10"
+         app:small_shine_offset_angle="20"
+         app:shine_distance_multiple="1.5"
+         app:small_shine_color="#CC9999"
+         app:shine_count="8"
+         app:shine_size="30dp"
+         app:siShape="@raw/like" />
+```
+
+# Available Attributes
+
+```cs
+<attr name="btn_color" format="color" />
+<attr name="btn_fill_color" format="color" />
+<attr name="shine_count" format="integer" />
+<attr name="shine_turn_angle" format="float" />
+<attr name="small_shine_offset_angle" format="float" />
+<attr name="enable_flashing" format="boolean" />
+<attr name="allow_random_color" format="boolean" />
+<attr name="small_shine_color" format="color" />
+<attr name="big_shine_color" format="color" />
+<attr name="shine_animation_duration" format="integer" />
+<attr name="click_animation_duration" format="integer" />
+<attr name="shine_distance_multiple" format="float" />
+<attr name="shine_size" format="dimension" />
 ```
