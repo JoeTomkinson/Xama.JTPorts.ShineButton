@@ -11,6 +11,10 @@ _Xamarin.Android_ Native "Shine Button" control. This is a UI lib for Xamarin An
 
 This is a ported build, converted from Java to C# for use with the Xamarin MonoFramework. There are only a couple of new additions from the original library currently.
 
+<br>
+
+![!gif](https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/images/20190216_225431.gif?raw=true)
+
 # Outstanding Tasks
 
 - [ ] Fill out readme.md a bit better.
@@ -35,9 +39,6 @@ This is a ported build, converted from Java to C# for use with the Xamarin MonoF
 ## Additional Functionality
 - [TO BE ADDED]
 
-# Customary sample GIF
-
-[TO BE ADDED]
 
 <br>
 
