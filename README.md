@@ -35,6 +35,18 @@ This is a ported build, converted from Java to C# for use with the Xamarin MonoF
 
 <br>
 
+# Installation
+
+![NuGetIcon](https://raw.githubusercontent.com/DigitalSa1nt/Xama.JTPorts.ShineButton/master/images/nugetIcon.png)
+
+This can be installed to any Xamarin Android project by adding the [NuGet package](https://www.nuget.org/packages/Xama.JTPorts.ShineButton/) to your solution. This library has been migrated to AndroidX Support libraries so it may ask you to install those dependencies if you have not migrated across to AndroidX yet.
+
+Package Manager:
+> Install-Package Xama.JTPorts.ShineButton -Version 1.0.1
+
+.NET CLI:
+> dotnet add package Xama.JTPorts.ShineButton --version 1.0.1
+
 # Basic usage
 
 The Icon shape is made from png mask and the ported library preferred RAW formats, however you can use normal images, just bear in mind that as it masks an image you'll lose details, so use cut-out images instead, similar to the animated gif above.
