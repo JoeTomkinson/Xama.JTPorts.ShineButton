@@ -15,25 +15,19 @@ This is a ported build, converted from Java to C# for use with the Xamarin MonoF
 
 ![!gif](https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/images/20190216_225431.gif?raw=true)
 
-# Outstanding Tasks
-
-- [x] Fill out readme.md a bit better.
-
-- [ ] Rework the sample removing the physical classes, replacing them with nuget references.
-
-- [x] Convert setters to properties instead as per c# standards.
-
-- [x] Convert to Camel case where appropriate.
-
-- [x] Create v1 nuget package.
-
-- [x] There's quite a few issues I've noticed from the original port library, so need to work through these.
-
-- [ ] Create animated gifs showcasing different settings
-
-- [ ] Decide if I want to fix the 'sighing' effect that can happen with certain settings. 
-
 <br>
+
+# Installation
+
+![NuGetIcon](https://raw.githubusercontent.com/DigitalSa1nt/Xama.JTPorts.ShineButton/master/images/nugetIcon.png)
+
+This can be installed to any Xamarin Android project by adding the [NuGet package](https://www.nuget.org/packages/Xama.JTPorts.ShineButton/) to your solution. This library has been migrated to AndroidX Support libraries so it may ask you to install those dependencies if you have not migrated across to AndroidX yet.
+
+Package Manager:
+> Install-Package Xama.JTPorts.ShineButton -Version 1.0.1
+
+.NET CLI:
+> dotnet add package Xama.JTPorts.ShineButton --version 1.0.1
 
 # Basic usage
 
