@@ -18,16 +18,18 @@
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <PackageId>Xama.JTPorts.ShineButton</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Description>Xamarin.Android Native "Shine Button" control. This is a UI lib for Xamarin Android. Creates %27shining%27 effects.</Description>
     <Authors>Joe Tomkinson</Authors>
     <Title>Xama.JTPorts.ShineButton</Title>
     <Owners>Joe Tomkinson</Owners>
-    <Copyright>Joe Tomkinson</Copyright>
+    <Copyright>2020</Copyright>
     <PackageProjectUrl>https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/images/shinebuttonicon.png%3fraw=true</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/DigitalSa1nt/Xama.JTPorts.ShineButton/master/images/nugetIcon.png</PackageIconUrl>
     <IsDevelopmentDependency>False</IsDevelopmentDependency>
+    <PackageReleaseNotes>1.0.1 - Migratred to Android X support libraries.</PackageReleaseNotes>
+    <Summary>Xamarin.Android Native "Shine Button" control. This is a UI lib for Xamarin Android. Creates %27shining%27 effects.</Summary>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
