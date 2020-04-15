@@ -15,24 +15,6 @@ This is a ported build, converted from Java to C# for use with the Xamarin MonoF
 
 ![!gif](https://github.com/DigitalSa1nt/Xama.JTPorts.ShineButton/blob/master/images/20190216_225431.gif?raw=true)
 
-# Outstanding Tasks
-
-- [x] Fill out readme.md a bit better.
-
-- [ ] Rework the sample removing the physical classes, replacing them with nuget references.
-
-- [x] Convert setters to properties instead as per c# standards.
-
-- [x] Convert to Camel case where appropriate.
-
-- [x] Create v1 nuget package.
-
-- [x] There's quite a few issues I've noticed from the original port library, so need to work through these.
-
-- [ ] Create animated gifs showcasing different settings
-
-- [ ] Decide if I want to fix the 'sighing' effect that can happen with certain settings. 
-
 <br>
 
 # Installation
