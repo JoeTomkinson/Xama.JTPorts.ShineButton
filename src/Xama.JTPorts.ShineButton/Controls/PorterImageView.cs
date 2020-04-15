@@ -2,11 +2,12 @@
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Util;
+using AndroidX.AppCompat.Widget;
 using System;
 
 namespace ShineButton.Classes
 {
-    public abstract class PorterImageView : Android.Support.V7.Widget.AppCompatImageView
+    public abstract class PorterImageView : AppCompatImageView
     {
         private static String TAG = nameof(PorterImageView);
         private static PorterDuffXfermode PORTER_DUFF_XFERMODE = new PorterDuffXfermode(PorterDuff.Mode.DstIn);
